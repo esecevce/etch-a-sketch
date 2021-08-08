@@ -21,6 +21,15 @@ function addEL(color) {
                 elem.setAttribute("style", "background-color: " + `rgb(${Math.random()*255}, ${Math.random()*255}, ${Math.random()*255})`);
             });
         });
+    } else if (color === "gradial") {
+        // i don't really understand how this works
+        children.forEach(elem => {
+            let opac = 0.1;
+            elem.addEventListener("mouseover", () => {
+                elem.setAttribute("style", `background-color: black; opacity: ${opac}`);
+                opac = Number(getComputedStyle(elem).opacity) + 0.1;
+            });
+        });
     } else {
         children.forEach(elem => {
             elem.addEventListener("mouseover", () => {
@@ -54,3 +63,11 @@ const btnRandom = document.querySelector("#btn-random");
 btnRandom.addEventListener("click", () => {
     addEL("random");
 });
+
+const btnGradial = document.querySelector("#btn-gradial");
+btnGradial.addEventListener("click", () => {
+    addEL("gradial");
+})
+
+createGrid(16);
+addEL("black")
