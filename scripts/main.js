@@ -1,17 +1,34 @@
 const squares = document.querySelector("#squares");
 
+let color = "black";
+
 function createGrid(num) {
     for (let i = 0; i < num * num; i++) {
         const square = document.createElement("div");
         square.classList.add("square");
         squares.appendChild(square);
-    
-        square.addEventListener("mouseover", () => {
-            square.setAttribute("style", "background-color: red");
-        });
     }
     
     squares.setAttribute("style", `grid-template-columns: repeat(${num}, calc(400px / ${num})); grid-template-rows: repeat(${num}, calc(400px / ${num}));`);
+}
+
+function addEL(color) {
+    const children = squares.querySelectorAll("div");
+
+    if (color === "random") {
+        children.forEach(elem => {
+            elem.addEventListener("mouseover", () => {
+                elem.setAttribute("style", "background-color: " + `rgb(${Math.random()*255}, ${Math.random()*255}, ${Math.random()*255})`);
+            });
+        });
+    } else {
+        children.forEach(elem => {
+            elem.addEventListener("mouseover", () => {
+                elem.setAttribute("style", "background-color: " + color);
+            });
+        });
+    }
+
 }
 
 function removeChilds(parent) {
@@ -20,7 +37,7 @@ function removeChilds(parent) {
     }
 }
 
-btnClear = document.querySelector("#btn-clear");
+const btnClear = document.querySelector("#btn-clear");
 btnClear.addEventListener("click", () => {
     removeChilds(squares);
 
@@ -30,6 +47,10 @@ btnClear.addEventListener("click", () => {
     }
     gridNum = Number(gridNum);
     createGrid(gridNum);
+    addEL(color);
 });
 
-createGrid(16);
+const btnRandom = document.querySelector("#btn-random");
+btnRandom.addEventListener("click", () => {
+    addEL("random");
+});
